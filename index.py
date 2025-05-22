@@ -1,9 +1,14 @@
 import discord
 from discord.ext import commands
 
-TOKEN = "MTM3NDc5MzMyNzQ3NTU1NjQ2Mw.Gjp5Ye.nKvBZl0joIDaJ5PEimw4Sne0OvKCdg5i7NaJvM"
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+TOKEN = os.getenv("BOT_TOKEN")
 MOD_CHANNEL_ID = 1374797067125526538  # Replace with your mod channel ID
-VERIFIED_ROLE_ID = 1374797431216013332  # Optional: Replace with your Verified role ID
+VERIFIED_ROLE_ID = 1374797431216013332  
 YOUR_GUILD_ID = 1374591755684548688
 UNVERIFIED_ROLE = 1374797350765072449
 intents = discord.Intents.default()
@@ -86,7 +91,7 @@ async def on_member_join(member):
 async def on_message(message):
     if isinstance(message.channel, discord.DMChannel) and not message.author.bot:
         # Get the guild and member object
-        guild = bot.get_guild(YOUR_GUILD_ID)  # Replace with your server's ID
+        guild = bot.get_guild(YOUR_GUILD_ID)  
         if guild:
             member = guild.get_member(message.author.id)
             if member:
