@@ -36,6 +36,9 @@ class VerificationView(discord.ui.View):
         role = guild.get_role(VERIFIED_ROLE_ID)
         if member and role:
             await member.add_roles(role)
+            unverified_role = member.guild.get_role(UNVERIFIED_ROLE)
+            if unverified_role:
+                await member.remove_roles(unverified_role)
             try:
                 await member.send(
                     f"🎉 Congratulations, you’ve been **verified** and now have full access to the server! "
@@ -75,6 +78,7 @@ async def on_ready():
 async def on_member_join(member):
     try:
         unverified_role = member.guild.get_role(UNVERIFIED_ROLE)
+        
         await member.add_roles(unverified_role) #added this line
         dm_message = (
             f"Hi {member.name}, welcome to the AFE Scholars Discord!\n\n"
@@ -82,7 +86,8 @@ async def on_member_join(member):
             "with a screenshot or photo of your AFE scholarship award notification. "
             "You may blur out any sensitive information except your name and the award confirmation.\n\n"
             "A moderator will review your submission and grant you access soon. "
-            "Thank you!"
+            "Thank you!\n\n"
+            "P.S My code is open-source on [github](https://github.com/SunkenInTime/amazon-fe-verification-bot)"
         )
         await member.send(dm_message)
     except Exception as e:
